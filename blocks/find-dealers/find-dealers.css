@@ -370,6 +370,19 @@ main .find-dealers .leaflet-marker-shadow {
   -webkit-user-drag: none;
 }
 
+/* See search-destinations.css: AEM's `main img { max-width:100%; width:auto;
+   height:auto }` breaks Leaflet's 256px tile grid on retina displays. This
+   MUST come before .leaflet-tile-loaded below — same specificity, so source
+   order decides the cascade, and .leaflet-tile-loaded must win once a tile
+   has actually loaded or every tile stays permanently hidden. */
+main .find-dealers .leaflet-tile {
+  filter: inherit;
+  visibility: hidden;
+  max-width: none !important;
+  width: 256px !important;
+  height: 256px !important;
+}
+
 main .find-dealers .leaflet-tile-loaded {
   visibility: inherit;
 }
@@ -412,16 +425,6 @@ main .find-dealers .leaflet-container {
   overflow: hidden;
   font-family: inherit;
   background: #eef2f7;
-}
-
-/* See search-destinations.css: AEM's `main img { max-width:100%; width:auto;
-   height:auto }` breaks Leaflet's 256px tile grid on retina displays. */
-main .find-dealers .leaflet-tile {
-  filter: inherit;
-  visibility: hidden;
-  max-width: none !important;
-  width: 256px !important;
-  height: 256px !important;
 }
 
 main .find-dealers .leaflet-pane img,

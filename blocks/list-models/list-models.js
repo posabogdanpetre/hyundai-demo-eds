@@ -1,21 +1,19 @@
 // Sample data for standalone/preview mode.
 // In production, data comes dynamically from bridge.toolResult.
 const SAMPLE_DATA = [
-  { name: 'IONIQ 5', description: 'All-electric compact SUV with fast-charging capability.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2025-ioniq-5-vehicle-browse-hero?qlt=85,0&fmt=webp', price: '$35,000 Starting MSRP', category: 'Electric SUV' },
-  { name: 'TUCSON Hybrid', description: 'Compact hybrid SUV blending efficiency with everyday utility.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2025-tucson-hev-vehicle-browse-hero?qlt=85,0&fmt=webp', price: '$31,300 Starting MSRP', category: 'Hybrid SUV' },
-  { name: 'SANTA FE Hybrid', description: 'Midsize hybrid SUV with three-row versatility.', price: '$36,400 Starting MSRP', category: 'Hybrid SUV', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-santa-fe-hev-vehicle-browse-hero?wid=1200&hei=630&qlt=85,0&fmt=webp' },
-  { name: 'PALISADE Hybrid', description: 'Flagship three-row hybrid SUV with premium Calligraphy trims.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2027-palisade-hev-calligraphy-black-ink-fwd-abyss-black-profile?fmt=webp-alpha', price: '$44,560 Starting MSRP', category: 'Hybrid SUV' },
-  { name: 'IONIQ 9', description: "Three-row all-electric SUV built on Hyundai's E-GMP platform.", image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-ioniq-9-calligraphy-awd-cosmic-blue-pearl-profile?fmt=webp-alpha', price: '$58,955 Starting MSRP', category: 'Electric SUV' },
-  { name: 'VENUE', description: 'Subcompact SUV offering an accessible entry point to the lineup.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2024-venue-vehicle-browse-hero?qlt=85,0&fmt=webp', price: '$20,550 Starting MSRP', category: 'SUV' },
-  { name: 'SANTA CRUZ', description: 'Compact sport adventure vehicle with an open bed.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2025-santa-cruz-vehicle-browse-hero?qlt=85,0&fmt=webp', price: null, category: 'Pickup' },
-  { name: 'ELANTRA', description: 'Compact sedan with bold styling and efficient powertrains.', price: null, category: 'Sedan', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2024-elantra-open-graph?wid=1200&hei=630&qlt=85,0&fmt=webp' },
-  { name: 'TUCSON', description: 'Compact SUV with modern design and available all-wheel drive.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-tucson-vehicle-browse-hero?qlt=85,0&fmt=webp', price: null, category: 'SUV' },
+  { name: '2026 IONIQ 5', description: 'Award-winning electric SUV with up to 320 hp and an EPA-estimated 303-mile range.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-ioniq-5-limited-rwd-gravity-gold-matte-profile?fmt=webp-alpha', price: '$35,000', category: 'Electric SUV' },
+  { name: '2025 IONIQ 6', description: 'Streamlined all-electric sedan built for aerodynamic efficiency and long range.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-ioniq-6-n-0188b-future-vehicles:2560-2560x872?qlt=85,0&fmt=webp', price: '$37,850', category: 'Electric Sedan' },
+  { name: '2026 IONIQ 9', description: 'Three-row electric SUV offering spacious seating and long-range capability.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-ioniq-9-calligraphy-awd-cosmic-blue-pearl-profile?fmt=webp-alpha', price: '$58,955', category: 'Electric SUV' },
+  { name: '2026 TUCSON', description: 'Compact SUV with bold design and available all-wheel drive.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-tucson-limited-fwd-atlantis-blue-profile?fmt=webp-alpha', price: '$29,700', category: 'SUV' },
+  { name: '2026 TUCSON Hybrid', description: 'Hybrid compact SUV combining efficiency with everyday versatility.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-tucson-hev-limited-awd-ash-black-profile?fmt=webp-alpha', price: '$31,300', category: 'Hybrid SUV' },
+  { name: '2026 SANTA FE', description: 'Midsize SUV with a rugged design and roomy three-row interior.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-santa-fe-calligraphy-fwd-earthy-brass-matte-profile?fmt=webp-alpha', price: '$35,050', category: 'SUV' },
+  { name: '2026 SANTA FE Hybrid', description: 'Hybrid midsize SUV blending efficiency with three-row family space.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2026-santa-fe-hev-calligraphy-fwd-ultimate-red-profile?fmt=webp-alpha', price: '$36,400', category: 'Hybrid SUV' },
+  { name: '2027 PALISADE', description: 'Flagship three-row SUV with premium comfort and available luxury trims.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2027-palisade-calligraphy-fwd-robust-emerald-profile?fmt=webp-alpha', price: '$39,735', category: 'SUV' },
+  { name: '2027 PALISADE Hybrid', description: 'Hybrid flagship SUV offering three rows of seating with added efficiency.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2027-palisade-hev-calligraphy-black-ink-fwd-abyss-black-profile?fmt=webp-alpha', price: '$44,560', category: 'Hybrid SUV' },
 ];
 
 // Brand palette from the action payload.
-const PALETTE = ['#002c5e', '#2486d3', '#3860be'];
-
-const CARD_COLORS = ['#378ef0', '#9256d9', '#0fb5ae', '#e68619', '#d83790', '#2dca72', '#4046ca', '#72b340'];
+const PALETTE = ['#002c5e', '#2486d3'];
 
 function getThemedCardBg(palette) {
   if (!palette || !palette[0]) return null;
@@ -27,15 +25,16 @@ function getThemedCardBg(palette) {
   const lum = (c) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
   const relLum = (rr, gg, bb) => 0.2126 * lum(rr) + 0.7152 * lum(gg) + 0.0722 * lum(bb);
   if (relLum(r, g, b) <= 0.12) return { bg: `#${hex}`, fg: '#ffffff' };
-  let lo = 0, hi = 1;
-  for (let i = 0; i < 20; i++) {
-    const m = (lo + hi) / 2;
-    if (relLum(Math.round(r * m), Math.round(g * m), Math.round(b * m)) > 0.12) hi = m; else lo = m;
-  }
-  const dr = Math.round(r * lo), dg = Math.round(g * lo), db = Math.round(b * lo);
+  let lo = 0; let hi = 1;
+  for (let i = 0; i < 20; i += 1) { const m = (lo + hi) / 2; if (relLum(Math.round(r * m), Math.round(g * m), Math.round(b * m)) > 0.12) hi = m; else lo = m; }
+  const dr = Math.round(r * lo); const dg = Math.round(g * lo); const db = Math.round(b * lo);
   return { bg: `#${dr.toString(16).padStart(2, '0')}${dg.toString(16).padStart(2, '0')}${db.toString(16).padStart(2, '0')}`, fg: '#ffffff' };
 }
 const theme = getThemedCardBg(PALETTE);
+
+const CARD_COLORS = ['#378ef0', '#9256d9', '#0fb5ae', '#e68619', '#d83790', '#2dca72', '#4046ca', '#72b340'];
+
+const CONCEPT = 'product-list';
 
 export default async function decorate(block, bridge) {
   let items;
@@ -51,6 +50,7 @@ export default async function decorate(block, bridge) {
       // structuredContent.models — bare array outputSchema; key derived from actionName "list_models"
       items = structuredContent?.models || [];
     }
+    items = items.filter((it) => (CONCEPT === 'deals-list' ? it.is_deal === true : it.is_deal !== true));
   } else {
     items = SAMPLE_DATA;
   }
@@ -70,21 +70,18 @@ export default async function decorate(block, bridge) {
 }
 
 function renderItems(block, items, bridge) {
-  const list = (items || []).slice(0, 10);
-
   const wrapper = document.createElement('div');
   wrapper.className = 'list-models-wrapper';
 
   const track = document.createElement('div');
   track.className = 'list-models-track';
 
-  list.forEach((item, i) => {
+  items.slice(0, 10).forEach((item, i) => {
     const card = document.createElement('div');
     card.className = 'list-models-card';
 
     const imageBox = document.createElement('div');
     imageBox.className = 'list-models-image';
-
     const fallbackColor = CARD_COLORS[i % CARD_COLORS.length];
     const colorDiv = () => {
       const d = document.createElement('div');
@@ -96,7 +93,7 @@ function renderItems(block, items, bridge) {
       img.src = item.image_url;
       img.alt = item.name || '';
       img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      img.onerror = () => img.parentNode && img.parentNode.replaceChild(colorDiv(), img);
+      img.onerror = () => img.parentNode.replaceChild(colorDiv(), img);
       imageBox.appendChild(img);
     } else {
       imageBox.appendChild(colorDiv());
@@ -105,29 +102,33 @@ function renderItems(block, items, bridge) {
 
     const info = document.createElement('div');
     info.className = 'list-models-info';
-    info.style.cssText = `background:${theme?.bg ?? '#1a1a1a'};color:${theme?.fg ?? '#fff'}`;
+    info.style.cssText = `background:${theme?.bg ?? '#1a1a1a'};color:${theme?.fg ?? '#fff'};`;
 
+    const title = document.createElement('h3');
+    title.className = 'list-models-name';
+    title.textContent = item.name || '';
+    info.appendChild(title);
+
+    if (item.description) {
+      const desc = document.createElement('p');
+      desc.className = 'list-models-desc';
+      desc.textContent = item.description;
+      info.appendChild(desc);
+    }
+
+    const meta = document.createElement('div');
+    meta.className = 'list-models-meta';
+    const price = document.createElement('span');
+    price.className = 'list-models-price';
+    price.textContent = item.price || '';
+    meta.appendChild(price);
     if (item.category) {
       const badge = document.createElement('span');
       badge.className = 'list-models-badge';
       badge.textContent = item.category;
-      info.appendChild(badge);
+      meta.appendChild(badge);
     }
-
-    const title = document.createElement('h3');
-    title.className = 'list-models-title';
-    title.textContent = item.name || '';
-    info.appendChild(title);
-
-    const desc = document.createElement('p');
-    desc.className = 'list-models-desc';
-    desc.textContent = item.description || '';
-    info.appendChild(desc);
-
-    const price = document.createElement('span');
-    price.className = 'list-models-price';
-    price.textContent = item.price || 'MSRP available at dealer';
-    info.appendChild(price);
+    info.appendChild(meta);
 
     const btn = document.createElement('button');
     btn.className = 'list-models-cta';
@@ -135,7 +136,7 @@ function renderItems(block, items, bridge) {
     btn.textContent = 'View Details';
     if (bridge) {
       btn.addEventListener('click', () => {
-        bridge.sendMessage(`Tell me more about the Hyundai ${item.name}`);
+        bridge.sendMessage(`Tell me more about the ${item.name}`);
       });
     }
     info.appendChild(btn);
@@ -155,16 +156,15 @@ function renderItems(block, items, bridge) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = `list-models-arrow list-models-arrow-${dir}`;
-    b.setAttribute('aria-label', dir === 'left' ? 'Scroll left' : 'Scroll right');
     b.textContent = dir === 'left' ? '◀' : '▶';
-    const scrollBy = () => {
-      const card = track.querySelector('.list-models-card');
-      const amount = card ? card.offsetWidth + 16 : 236;
-      track.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' });
+    b.setAttribute('aria-label', dir === 'left' ? 'Scroll left' : 'Scroll right');
+    const scroll = () => {
+      const cardW = track.querySelector('.list-models-card')?.offsetWidth || 220;
+      track.scrollBy({ left: dir === 'left' ? -(cardW + 16) : cardW + 16, behavior: 'smooth' });
     };
-    b.addEventListener('click', scrollBy);
+    b.addEventListener('click', scroll);
     b.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scrollBy(); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scroll(); }
     });
     return b;
   };
@@ -175,12 +175,12 @@ function renderItems(block, items, bridge) {
 
   const updateArrows = () => {
     const maxScroll = track.scrollWidth - track.clientWidth;
-    leftArrow.style.display = track.scrollLeft <= 2 ? 'none' : 'flex';
-    rightArrow.style.display = track.scrollLeft >= maxScroll - 2 ? 'none' : 'flex';
-    fade.style.display = track.scrollLeft >= maxScroll - 2 ? 'none' : 'block';
+    leftArrow.style.display = track.scrollLeft <= 8 ? 'none' : 'flex';
+    rightArrow.style.display = track.scrollLeft >= maxScroll - 8 ? 'none' : 'flex';
+    fade.style.display = track.scrollLeft >= maxScroll - 8 ? 'none' : 'block';
   };
   track.addEventListener('scroll', updateArrows);
-  requestAnimationFrame(updateArrows);
+  setTimeout(updateArrows, 0);
 
   block.appendChild(wrapper);
 }

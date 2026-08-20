@@ -179,7 +179,10 @@ function renderView(block, item, bridge) {
 
 /**
  * Compact teaser card: hero image on top, name/category/price below, and a
- * "View Details" CTA that opens the fullscreen trims view.
+ * "See All Trims" CTA that opens the fullscreen trims view. Deliberately NOT
+ * labeled "View Details" — the list-models card already uses that label for
+ * the tool call that produces *this* card, so reusing it here for the next
+ * tier (fullscreen) would make two different actions look identical.
  */
 function renderCard(block, item, bridge, onOpenFullscreen) {
   const card = document.createElement('div');
@@ -260,6 +263,17 @@ function renderCard(block, item, bridge, onOpenFullscreen) {
 
     const allColors = [...new Set(trims.flatMap((t) => t.colors || []))].slice(0, 6);
     if (allColors.length) {
+      const colorGroup = document.createElement('div');
+      colorGroup.className = 'gmd-card-colors-group';
+
+      const colorLabel = document.createElement('span');
+      colorLabel.className = 'gmd-card-colors-label';
+      // Explicitly labeled as its own count — these are deduplicated exterior
+      // colors across ALL trims combined, not one dot per trim, so it will
+      // rarely match the trim count above and shouldn't be read as if it did.
+      colorLabel.textContent = `${allColors.length} color${allColors.length === 1 ? '' : 's'}`;
+      colorGroup.appendChild(colorLabel);
+
       const swatches = document.createElement('div');
       swatches.className = 'gmd-card-colors';
       allColors.forEach((hex) => {
@@ -268,7 +282,8 @@ function renderCard(block, item, bridge, onOpenFullscreen) {
         dot.style.background = hex;
         swatches.appendChild(dot);
       });
-      meta.appendChild(swatches);
+      colorGroup.appendChild(swatches);
+      meta.appendChild(colorGroup);
     }
     content.appendChild(meta);
   }
@@ -276,7 +291,7 @@ function renderCard(block, item, bridge, onOpenFullscreen) {
   const btn = document.createElement('button');
   btn.className = 'gmd-cta';
   btn.type = 'button';
-  btn.textContent = 'View Details';
+  btn.textContent = 'See All Trims';
   btn.addEventListener('click', () => {
     if (onOpenFullscreen) onOpenFullscreen();
     else if (bridge) bridge.sendMessage(`Tell me more about the ${item.name}`);

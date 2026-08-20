@@ -130,6 +130,20 @@ main .get-model-details .gmd-card-trims-count {
   color: #2486d3;
 }
 
+main .get-model-details .gmd-card-colors-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 10px;
+  border-left: 1px solid rgb(0 0 0 / 12%);
+}
+
+main .get-model-details .gmd-card-colors-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b6b6b;
+}
+
 main .get-model-details .gmd-card-colors {
   display: flex;
   gap: 4px;

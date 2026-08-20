@@ -194,7 +194,7 @@ main .find-dealers .find-dealers-info {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: #f7f8fa;
   color: #1b1b1b;
 }
 

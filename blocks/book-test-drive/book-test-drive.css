@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Required for correct iframe sizing — AEM section margins inflate shadow body */
+main > div,
+main > .section,
+main > .section:first-of-type {
+  margin: 0;
+}
+main > .section > div {
+  max-width: none;
+  padding: 0;
+}
+body {
+  overflow: auto;
+}
+
+main .book-test-drive {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+main .book-test-drive .btd-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+  background: #fff;
+  box-sizing: border-box;
+}
+
+main .book-test-drive .btd-hero-wrap,
+main .book-test-drive .btd-hero {
+  width: 100%;
+}
+
+main .book-test-drive .btd-hero {
+  height: 140px;
+  overflow: hidden;
+}
+
+main .book-test-drive .btd-header {
+  padding: 12px 16px;
+}
+
+main .book-test-drive .btd-title {
+  margin: 0 0 4px !important;
+  font-size: 15px !important;
+  font-weight: 700;
+  line-height: 1.2 !important;
+}
+
+main .book-test-drive .btd-sub {
+  margin: 0 !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  opacity: 0.78;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+main .book-test-drive .btd-form {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+main .book-test-drive .btd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+main .book-test-drive .btd-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.55;
+  color: #333;
+}
+
+main .book-test-drive .btd-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  border: 1px solid #cfd6de;
+  border-radius: 6px;
+  background: #fff;
+  color: #1a1a1a;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+main .book-test-drive .btd-input:focus {
+  outline: none;
+  border-color: #002c5e;
+  box-shadow: 0 0 0 2px rgba(0, 44, 94, 0.25);
+}
+
+main .book-test-drive select.btd-input {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+main .book-test-drive .btd-cta {
+  margin-top: 4px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+main .book-test-drive .btd-cta:hover {
+  opacity: 0.9;
+}
+
+main .book-test-drive .btd-confirm {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+main .book-test-drive .btd-status {
+  align-self: flex-start;
+  background: #2dca72;
+  color: #06331b;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+main .book-test-drive .btd-confirm-msg {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #1a1a1a;
+}
+
+main .book-test-drive .btd-confirm-id {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #002c5e;
+}
+
+/* Dark mode — dim outer surface and adapt form controls; keep palette header color. */
+@media (prefers-color-scheme: dark) {
+  main .book-test-drive .btd-card { background: #181818; }
+  main .book-test-drive .btd-label { color: #cfd6de; }
+  main .book-test-drive .btd-input { background: #1e1e1e; color: #f2f2f2; border-color: #3a3f45; }
+  main .book-test-drive .btd-confirm-msg { color: #f2f2f2; }
+  main .book-test-drive .btd-confirm-id { color: #7cb8f0; }
+}
+
+body.dark main .book-test-drive .btd-card { background: #181818; }
+body.dark main .book-test-drive .btd-label { color: #cfd6de; }
+body.dark main .book-test-drive .btd-input { background: #1e1e1e; color: #f2f2f2; border-color: #3a3f45; }
+body.dark main .book-test-drive .btd-confirm-msg { color: #f2f2f2; }
+body.dark main .book-test-drive .btd-confirm-id { color: #7cb8f0; }

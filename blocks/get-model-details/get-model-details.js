@@ -113,7 +113,8 @@ function renderView(block, item, bridge) {
   const renderBody = () => {
     body.textContent = '';
     if (displayMode === 'fullscreen') {
-      renderFullscreen(body, item, bridge);
+      const exitFs = () => requestMode('inline');
+      renderFullscreen(body, item, bridge, exitFs);
     } else {
       const openFs = canFullscreen ? () => requestMode('fullscreen') : null;
       renderCard(body, item, bridge, openFs);
@@ -315,7 +316,7 @@ function specRow(iconSvg, text) {
   return row;
 }
 
-function buildTrimCard(trim, vehiclePageUrl, buildUrl, modelName, bridge) {
+function buildTrimCard(trim, vehiclePageUrl, buildUrl, modelName, bridge, exitFullscreen) {
   const card = document.createElement('div');
   card.className = 'gmd-trim-card';
 
@@ -380,7 +381,11 @@ function buildTrimCard(trim, vehiclePageUrl, buildUrl, modelName, bridge) {
     quote.type = 'button';
     quote.className = 'gmd-button gmd-button-quote';
     quote.textContent = 'Request a Quote';
-    quote.addEventListener('click', () => {
+    quote.addEventListener('click', async () => {
+      // Fullscreen is a host display mode -- it stays up over the
+      // conversation until we hand it back, hiding the new widget the quote
+      // request will render. Exit it first so the reply is visible.
+      if (exitFullscreen) await exitFullscreen();
       bridge.sendMessage(`Request a fidelity member quote for the Hyundai ${modelName} ${trim.name}`);
     });
     actions.appendChild(quote);
@@ -395,7 +400,7 @@ function buildTrimCard(trim, vehiclePageUrl, buildUrl, modelName, bridge) {
  * (name, price, specs, real color swatches, Explore/Build links) modeled
  * after hyundaiusa.com's own vehicle trim comparison layout.
  */
-function renderFullscreen(root, item, bridge) {
+function renderFullscreen(root, item, bridge, exitFullscreen) {
   const shell = document.createElement('div');
   shell.className = 'gmd-fs';
 
@@ -443,18 +448,10 @@ function renderFullscreen(root, item, bridge) {
     const grid = document.createElement('div');
     grid.className = 'gmd-trims-grid';
     trims.forEach((trim) => {
-      grid.appendChild(buildTrimCard(trim, item.vehiclePageUrl, item.buildUrl, item.name, bridge));
+      const trimCard = buildTrimCard(trim, item.vehiclePageUrl, item.buildUrl, item.name, bridge, exitFullscreen);
+      grid.appendChild(trimCard);
     });
     content.appendChild(grid);
-  }
-
-  if (bridge) {
-    const askBtn = document.createElement('button');
-    askBtn.type = 'button';
-    askBtn.className = 'gmd-ask-link';
-    askBtn.textContent = `Ask about the ${item.name}`;
-    askBtn.addEventListener('click', () => bridge.sendMessage(`Tell me more about the ${item.name}`));
-    content.appendChild(askBtn);
   }
 
   shell.appendChild(content);

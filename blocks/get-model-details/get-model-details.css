@@ -411,20 +411,6 @@ main .get-model-details .gmd-button-quote {
   color: #fff;
 }
 
-main .get-model-details .gmd-ask-link {
-  display: block;
-  margin-top: 32px;
-  padding: 0;
-  border: none;
-  background: none;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  color: #2486d3;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 @media (width <= 720px) {
   main .get-model-details .gmd-fs-hero {
     height: 200px;

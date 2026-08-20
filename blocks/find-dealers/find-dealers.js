@@ -1,21 +1,22 @@
-// Sample data for standalone/preview mode.
-// In production, data comes dynamically from bridge.toolResult.
+// Sample data for standalone/preview mode — the 10 real dealers nearest ZIP
+// 07008, captured from Hyundai's own dealer.dealerByZipV2.service API. Not
+// invented. In production, data comes dynamically from bridge.toolResult.
 // Views: carousel · interactive map · fullscreen dealer detail.
 const SAMPLE_DATA = [
   {
-    name: 'Hyundai of Atlanta', address: '2600 Cobb Pkwy SE', city: 'Atlanta', state: 'GA', zip: '30339', lat: 33.8834, lon: -84.4677, phone: '(770) 955-0200', services: ['Sales', 'Service', 'Parts', 'EV Certified'], hours: 'Mon-Sat 9am-8pm, Sun Closed', rating: 4.6, distance_miles: 4, inventory: ['IONIQ 5', 'TUCSON Hybrid', 'PALISADE Hybrid', 'ELANTRA'],
+    name: 'Sansones Route 1 Hyundai', address: '90-100 Route 1 North', city: 'Avenel', state: 'NJ', zip: '07001', lat: 40.5934, lon: -74.2722, phone: '(732) 815-0500', services: ['IONIQ Dealer', 'Car Care Express', 'Shopper Assurance'], hours: 'Mon-Fri 07:00 AM - 06:00 PM, Sat 07:00 AM - 04:00 PM, Sun Closed', distance_miles: 2.3,
   },
   {
-    name: 'Carolina Hyundai', address: '5900 E Independence Blvd', city: 'Charlotte', state: 'NC', zip: '28212', lat: 35.1637, lon: -80.7409, phone: '(704) 535-3400', services: ['Sales', 'Service', 'Parts'], hours: 'Mon-Sat 9am-7pm, Sun Closed', rating: 4.3, distance_miles: 11, inventory: ['TUCSON', 'ELANTRA', 'SANTA CRUZ'],
+    name: 'Island Hyundai', address: '1590 Hylan Blvd', city: 'Staten Island', state: 'NY', zip: '10305', lat: 40.5895, lon: -74.0887, phone: '(718) 865-9599', services: ['Car Care Express', 'Shopper Assurance'], hours: 'Mon-Fri 07:30 AM - 05:00 PM, Sat-Sun Closed', distance_miles: 7.5,
   },
   {
-    name: 'Boston Hyundai', address: '2 Allstate Rd', city: 'Boston', state: 'MA', zip: '02125', lat: 42.3188, lon: -71.0567, phone: '(617) 265-1000', services: ['Sales', 'Service', 'Parts', 'EV Certified'], hours: 'Mon-Sat 9am-8pm, Sun 11am-5pm', rating: 4.4, distance_miles: 6, inventory: ['IONIQ 5', 'IONIQ 9', 'TUCSON Hybrid', 'VENUE'],
+    name: 'Maxon Hyundai', address: '2329 Route 22 West', city: 'Union', state: 'NJ', zip: '07083', lat: 40.6914, lon: -74.2927, phone: '(908) 851-5500', services: ['IONIQ Dealer', 'Car Care Express', 'Shopper Assurance'], hours: 'Mon-Fri 07:30 AM - 06:00 PM, Sat 07:30 AM - 05:00 PM, Sun Closed', distance_miles: 8.2,
   },
   {
-    name: 'Miami Lakes Hyundai', address: '16800 NW 57th Ave', city: 'Miami Lakes', state: 'FL', zip: '33014', lat: 25.9181, lon: -80.3553, phone: '(305) 621-6300', services: ['Sales', 'Service', 'Parts'], hours: 'Mon-Sat 9am-9pm, Sun 11am-6pm', rating: 4.2, distance_miles: 9, inventory: ['ELANTRA', 'TUCSON', 'SANTA FE Hybrid'],
+    name: 'Hyundai City Of Bay Ridge', address: '9013 4th Avenue', city: 'Brooklyn', state: 'NY', zip: '11209', lat: 40.6193, lon: -74.0295, phone: '(718) 285-7000', services: ['IONIQ Dealer', 'Shopper Assurance'], hours: 'Mon-Fri 08:00 AM - 05:00 PM, Sat 08:00 AM - 04:00 PM, Sun Closed', distance_miles: 10.9,
   },
   {
-    name: 'Continental Hyundai', address: '855 E Golf Rd', city: 'Chicago', state: 'IL', zip: '60018', lat: 42.0334, lon: -87.8834, phone: '(847) 439-3300', services: ['Sales', 'Service', 'Parts', 'EV Certified'], hours: 'Mon-Sat 9am-8pm, Sun Closed', rating: 4.5, distance_miles: 14, inventory: ['IONIQ 5', 'SANTA FE Hybrid', 'PALISADE Hybrid', 'TUCSON'],
+    name: 'Global Hyundai Of North Plainfield', address: '1099 Rt 22 West', city: 'North Plainfield', state: 'NJ', zip: '07060', lat: 40.6163, lon: -74.4550, phone: '(908) 757-4000', services: ['IONIQ Dealer'], hours: 'Mon-Fri 07:00 AM - 06:00 PM, Sat 07:00 AM - 05:00 PM, Sun Closed', distance_miles: 12.0,
   },
 ];
 

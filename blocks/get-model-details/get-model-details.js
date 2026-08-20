@@ -315,7 +315,7 @@ function specRow(iconSvg, text) {
   return row;
 }
 
-function buildTrimCard(trim, vehiclePageUrl, buildUrl) {
+function buildTrimCard(trim, vehiclePageUrl, buildUrl, modelName, bridge) {
   const card = document.createElement('div');
   card.className = 'gmd-trim-card';
 
@@ -375,6 +375,16 @@ function buildTrimCard(trim, vehiclePageUrl, buildUrl) {
     build.textContent = 'Build';
     actions.appendChild(build);
   }
+  if (bridge) {
+    const quote = document.createElement('button');
+    quote.type = 'button';
+    quote.className = 'gmd-button gmd-button-quote';
+    quote.textContent = 'Request a Quote';
+    quote.addEventListener('click', () => {
+      bridge.sendMessage(`Request a fidelity member quote for the Hyundai ${modelName} ${trim.name}`);
+    });
+    actions.appendChild(quote);
+  }
   card.appendChild(actions);
 
   return card;
@@ -432,7 +442,9 @@ function renderFullscreen(root, item, bridge) {
 
     const grid = document.createElement('div');
     grid.className = 'gmd-trims-grid';
-    trims.forEach((trim) => grid.appendChild(buildTrimCard(trim, item.vehiclePageUrl, item.buildUrl)));
+    trims.forEach((trim) => {
+      grid.appendChild(buildTrimCard(trim, item.vehiclePageUrl, item.buildUrl, item.name, bridge));
+    });
     content.appendChild(grid);
   }
 

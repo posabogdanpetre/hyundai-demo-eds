@@ -223,8 +223,12 @@ main .get-model-details .gmd-fs {
 
 main .get-model-details .gmd-fs-hero {
   width: 100%;
-  height: 280px;
+  max-width: 1080px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 6;
+  max-height: 280px;
   background: #002c5e;
+  overflow: hidden;
 }
 
 main .get-model-details .gmd-fs-hero img {
@@ -413,7 +417,7 @@ main .get-model-details .gmd-button-quote {
 
 @media (width <= 720px) {
   main .get-model-details .gmd-fs-hero {
-    height: 200px;
+    max-height: 200px;
   }
 
   main .get-model-details .gmd-fs-content {

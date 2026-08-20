@@ -1,34 +1,43 @@
-// Sample data for standalone/preview mode.
-// In production, data comes dynamically from bridge.toolResult.
-// products[0] (PALISADE Hybrid) is rendered as the detail item in preview.
-const SAMPLE_DATA = [
-  { name: 'PALISADE Hybrid', description: 'Flagship three-row hybrid SUV with premium Calligraphy trims.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2027-palisade-hev-calligraphy-black-ink-fwd-abyss-black-profile?fmt=webp-alpha', price: '$44,560 Starting MSRP', category: 'Hybrid SUV' },
-  { name: 'IONIQ 5', description: 'All-electric compact SUV with fast-charging capability.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2025-ioniq-5-vehicle-browse-hero?qlt=85,0&fmt=webp', price: '$35,000 Starting MSRP', category: 'Electric SUV' },
-  { name: 'TUCSON Hybrid', description: 'Compact hybrid SUV blending efficiency with everyday utility.', image_url: 'https://s7d1.scene7.com/is/image/hyundai/2025-tucson-hev-vehicle-browse-hero?qlt=85,0&fmt=webp', price: '$31,300 Starting MSRP', category: 'Hybrid SUV' },
-];
-
-// Brand palette from the action payload — used to derive the content-panel background.
-// getThemedCardBg() darkens palette[0] to luminance <= 0.12 so white text has WCAG AA contrast.
-const PALETTE = ['#002c5e', '#2486d3', '#3860be'];
-
-function getThemedCardBg(palette) {
-  if (!palette || !palette[0]) return null;
-  let hex = palette[0].replace('#', '');
-  if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-  if (hex.length !== 6) return null;
-  let [r, g, b] = [parseInt(hex.slice(0, 2), 16), parseInt(hex.slice(2, 4), 16), parseInt(hex.slice(4, 6), 16)];
-  if (isNaN(r) || isNaN(g) || isNaN(b)) return null;
-  const lum = (c) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
-  const relLum = (rr, gg, bb) => 0.2126 * lum(rr) + 0.7152 * lum(gg) + 0.0722 * lum(bb);
-  if (relLum(r, g, b) <= 0.12) return { bg: `#${hex}`, fg: '#ffffff' };
-  let lo = 0, hi = 1;
-  for (let i = 0; i < 20; i++) { const m = (lo + hi) / 2; if (relLum(Math.round(r * m), Math.round(g * m), Math.round(b * m)) > 0.12) hi = m; else lo = m; }
-  const dr = Math.round(r * lo), dg = Math.round(g * lo), db = Math.round(b * lo);
-  return { bg: `#${dr.toString(16).padStart(2, '0')}${dg.toString(16).padStart(2, '0')}${db.toString(16).padStart(2, '0')}`, fg: '#ffffff' };
-}
-const theme = getThemedCardBg(PALETTE);
+// Sample data for standalone/preview mode — real trim/price/spec data for
+// PALISADE Hybrid, captured from Hyundai's own buildoptions.byo-options.json
+// API. Not invented. In production, data comes dynamically from bridge.toolResult.
+// Views: compact card · fullscreen model + trims detail.
+const SAMPLE_DATA = {
+  name: 'PALISADE Hybrid',
+  description: 'Flagship three-row hybrid SUV with premium Calligraphy trims.',
+  image_url: 'https://s7d1.scene7.com/is/image/hyundai/2027-palisade-hev-calligraphy-black-ink-fwd-abyss-black-profile?fmt=webp-alpha',
+  price: '$44,560 Starting MSRP',
+  category: 'Hybrid SUV',
+  buildUrl: 'https://www.hyundaiusa.com/us/en/build/options?modelYear=2027&modelName=PL30',
+  vehiclePageUrl: 'https://www.hyundaiusa.com/us/en/vehicles/palisade-hybrid',
+  trims: [
+    {
+      name: 'SEL', price: 44560, mpgText: 'FWD: 33 City / 35 Hwy / 34 Combined', horsePower: 329, driveTrain: 'FWD', seats: 7, colors: ['#171a1b', '#122d58', '#322630', '#3a3b3d', '#c0c0c0', '#40443e', '#ebebeb'],
+    },
+    {
+      name: 'SEL Premium', price: 47920, mpgText: '33 City / 35 Hwy / 34 Combined', horsePower: 329, driveTrain: 'FWD', seats: 7, colors: ['#171a1b', '#122d58', '#322630', '#3a3b3d', '#c0c0c0', '#40443e', '#ebebeb'],
+    },
+    {
+      name: 'Limited', price: 52390, mpgText: 'FWD: 31 City / 32 Hwy / 31 Combined', horsePower: 329, driveTrain: 'FWD', seats: 7, colors: ['#171a1b', '#122d58', '#322630', '#3a3b3d', '#c0c0c0', '#40443e', '#ebebeb'],
+    },
+    {
+      name: 'Calligraphy', price: 57180, mpgText: 'FWD: 31 City / 32 Hwy / 31 Combined', horsePower: 329, driveTrain: 'FWD', seats: 7, colors: ['#171a1b', '#122d58', '#322630', '#3a3b3d', '#c0c0c0', '#62453c', '#40443e'],
+    },
+    {
+      name: 'Calligraphy Black Ink', price: 57680, mpgText: 'FWD: 31 City / 32 Hwy / 31 Combined', horsePower: 329, driveTrain: 'FWD', seats: 7, colors: ['#171a1b', '#3a3b3d', '#ebebeb'],
+    },
+  ],
+};
 
 const CARD_COLORS = ['#002c5e', '#2486d3', '#3860be', '#0fb5ae', '#e68619', '#d83790'];
+
+// Small generic spec icons (self-authored line icons, not brand assets) —
+// used in the trim spec rows since Hyundai's own per-spec icon set isn't
+// exposed by the buildoptions API.
+const ICON_FUEL = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 3h7v15H4z" stroke="currentColor" stroke-width="1.4"/><path d="M4 8h7M11 6l3 2v6a1.5 1.5 0 0 0 3 0V9l-2-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICON_BOLT = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M11 2 4 12h5l-1 6 7-10h-5l1-6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+const ICON_DRIVETRAIN = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M10 3v4M10 13v4M3 10h4M13 10h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+const ICON_SEATS = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M5 17v-3a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
 
 export default async function decorate(block, bridge) {
   let item;
@@ -37,39 +46,142 @@ export default async function decorate(block, bridge) {
     bridge.applyHostStyles();
     const isPreview = bridge.hostContext?.preview === true;
     if (isPreview) {
-      item = SAMPLE_DATA[0];
+      item = SAMPLE_DATA;
     } else {
-      // Detail concept — structuredContent IS the item (flat). No wrapper key.
       const _result = await bridge.toolResult;
       item = _result?.structuredContent || {};
     }
+    block.textContent = '';
+    renderView(block, item, bridge);
+    observeAndReportSize(block, bridge);
   } else {
-    item = SAMPLE_DATA[0];
+    item = SAMPLE_DATA;
+    block.textContent = '';
+    renderView(block, item, bridge);
   }
+}
 
-  block.textContent = '';
+function observeAndReportSize(block, bridge) {
+  let lastW = -1;
+  let lastH = -1;
+  let timer = null;
+  const report = () => {
+    if (block.querySelector('.gmd-container.is-fullscreen')) return;
+    const w = block.offsetWidth;
+    const h = block.offsetHeight;
+    if (h === 0 || (w === lastW && h === lastH)) return;
+    lastW = w;
+    lastH = h;
+    bridge.reportSize(w, h);
+  };
+  report();
+  if (typeof ResizeObserver === 'undefined') return;
+  const ro = new ResizeObserver(() => {
+    clearTimeout(timer);
+    timer = setTimeout(report, 150);
+  });
+  ro.observe(block);
+}
 
+function hostSupportsFullscreen(bridge) {
+  const modes = bridge?.hostContext?.availableDisplayModes;
+  return Array.isArray(modes) && modes.includes('fullscreen');
+}
+
+function fmtPrice(n) {
+  return Number.isFinite(n) ? `$${n.toLocaleString('en-US')}` : null;
+}
+
+function renderView(block, item, bridge) {
   if (!item?.name) {
     const empty = document.createElement('p');
     empty.className = 'gmd-empty';
     empty.textContent = 'No matching model was found.';
     block.appendChild(empty);
-  } else {
-    renderDetail(block, item, bridge);
+    return;
   }
 
-  if (bridge) {
-    bridge.reportSize(block.offsetWidth, block.offsetHeight);
-    let resizeTimer;
-    const ro = new ResizeObserver(() => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => bridge.reportSize(block.offsetWidth, block.offsetHeight), 150);
-    });
-    ro.observe(block);
-  }
+  const container = document.createElement('div');
+  container.className = 'gmd-container';
+
+  const body = document.createElement('div');
+  body.className = 'gmd-body';
+
+  let displayMode = bridge?.hostContext?.displayMode || 'inline';
+  const canFullscreen = !bridge || hostSupportsFullscreen(bridge);
+
+  const renderBody = () => {
+    body.textContent = '';
+    if (displayMode === 'fullscreen') {
+      renderFullscreen(body, item, bridge);
+    } else {
+      const openFs = canFullscreen ? () => requestMode('fullscreen') : null;
+      renderCard(body, item, bridge, openFs);
+    }
+  };
+
+  const applyMode = () => {
+    const fs = displayMode === 'fullscreen';
+    container.classList.toggle('is-fullscreen', fs);
+    if (fs) {
+      block.style.maxWidth = 'none';
+      block.style.padding = '0';
+      bridge?.applyContainerDimensions?.(container);
+      container.style.width = '100vw';
+      container.style.maxWidth = '100vw';
+      container.style.height = '100vh';
+    } else {
+      block.style.maxWidth = '';
+      block.style.padding = '';
+      container.style.width = '';
+      container.style.maxWidth = '';
+      container.style.height = '';
+    }
+  };
+
+  const requestMode = async (mode) => {
+    if (!bridge?.requestDisplayMode) {
+      if (mode !== displayMode) {
+        displayMode = mode;
+        applyMode();
+        renderBody();
+      }
+      return;
+    }
+    try {
+      const res = await bridge.requestDisplayMode(mode);
+      const granted = res?.mode || mode;
+      if (granted !== displayMode) {
+        displayMode = granted;
+        applyMode();
+        renderBody();
+      }
+    } catch {
+      /* host declined — leave current mode as-is */
+    }
+  };
+
+  bridge?.onContextChange?.((ctx) => {
+    const next = ctx?.displayMode || 'inline';
+    if (next !== displayMode) {
+      displayMode = next;
+      applyMode();
+      renderBody();
+    }
+  });
+
+  container.appendChild(body);
+  block.appendChild(container);
+
+  applyMode();
+  renderBody();
 }
 
-function renderDetail(block, item, bridge) {
+/**
+ * Compact teaser card: hero image on top, name/category/price below, and a
+ * "View Details" CTA that opens the fullscreen trims view.
+ */
+function renderCard(block, item, bridge, onOpenFullscreen) {
   const card = document.createElement('div');
   card.className = 'gmd-card';
 
@@ -86,7 +198,7 @@ function renderDetail(block, item, bridge) {
     img.src = item.image_url;
     img.alt = item.name || '';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-    img.onerror = () => img.parentNode.replaceChild(colorDiv(), img);
+    img.onerror = () => { if (img.parentNode) img.parentNode.replaceChild(colorDiv(), img); };
     imageContainer.appendChild(img);
   } else {
     imageContainer.appendChild(colorDiv());
@@ -95,7 +207,6 @@ function renderDetail(block, item, bridge) {
 
   const content = document.createElement('div');
   content.className = 'gmd-content';
-  content.style.cssText = `background:${theme?.bg ?? '#1a1a1a'};color:${theme?.fg ?? '#fff'}`;
 
   if (item.category) {
     const chip = document.createElement('span');
@@ -126,14 +237,160 @@ function renderDetail(block, item, bridge) {
   const btn = document.createElement('button');
   btn.className = 'gmd-cta';
   btn.type = 'button';
-  btn.textContent = 'Build & Price';
-  if (bridge) {
-    btn.addEventListener('click', () => {
-      bridge.sendMessage(`Tell me more about the ${item.name}`);
-    });
-  }
+  btn.textContent = 'View Details';
+  btn.addEventListener('click', () => {
+    if (onOpenFullscreen) onOpenFullscreen();
+    else if (bridge) bridge.sendMessage(`Tell me more about the ${item.name}`);
+  });
   content.appendChild(btn);
 
   card.appendChild(content);
   block.appendChild(card);
+}
+
+function specRow(iconSvg, text) {
+  const row = document.createElement('div');
+  row.className = 'gmd-spec-row';
+  const icon = document.createElement('span');
+  icon.className = 'gmd-spec-icon';
+  icon.innerHTML = iconSvg;
+  const label = document.createElement('span');
+  label.textContent = text;
+  row.appendChild(icon);
+  row.appendChild(label);
+  return row;
+}
+
+function buildTrimCard(trim, vehiclePageUrl, buildUrl) {
+  const card = document.createElement('div');
+  card.className = 'gmd-trim-card';
+
+  const name = document.createElement('h3');
+  name.className = 'gmd-trim-name';
+  name.textContent = trim.name || '';
+  card.appendChild(name);
+
+  const priceEl = document.createElement('div');
+  priceEl.className = 'gmd-trim-price';
+  const priceText = fmtPrice(trim.price);
+  if (priceText) {
+    priceEl.innerHTML = `<strong>${priceText}</strong><span>Starting MSRP</span>`;
+  }
+  card.appendChild(priceEl);
+
+  if (Array.isArray(trim.colors) && trim.colors.length) {
+    const swatches = document.createElement('div');
+    swatches.className = 'gmd-trim-colors';
+    trim.colors.forEach((hex) => {
+      const dot = document.createElement('span');
+      dot.className = 'gmd-trim-color';
+      dot.style.background = hex;
+      dot.title = hex;
+      swatches.appendChild(dot);
+    });
+    card.appendChild(swatches);
+  }
+
+  const specs = document.createElement('div');
+  specs.className = 'gmd-specs';
+  if (trim.mpgText) specs.appendChild(specRow(ICON_FUEL, trim.mpgText));
+  if (Number.isFinite(trim.horsePower)) specs.appendChild(specRow(ICON_BOLT, `${trim.horsePower} hp`));
+  if (trim.driveTrain) specs.appendChild(specRow(ICON_DRIVETRAIN, trim.driveTrain));
+  if (Number.isFinite(trim.seats)) specs.appendChild(specRow(ICON_SEATS, `${trim.seats} seats`));
+  card.appendChild(specs);
+
+  // Hyundai's build tool and vehicle pages are configured per model, not per
+  // trim, so every trim card on a given model links to the same real URLs.
+  const actions = document.createElement('div');
+  actions.className = 'gmd-trim-actions';
+  if (vehiclePageUrl) {
+    const explore = document.createElement('a');
+    explore.className = 'gmd-button gmd-button-gray';
+    explore.href = vehiclePageUrl;
+    explore.target = '_blank';
+    explore.rel = 'noopener';
+    explore.textContent = 'Explore';
+    actions.appendChild(explore);
+  }
+  if (buildUrl) {
+    const build = document.createElement('a');
+    build.className = 'gmd-button gmd-button-navy';
+    build.href = buildUrl;
+    build.target = '_blank';
+    build.rel = 'noopener';
+    build.textContent = 'Build';
+    actions.appendChild(build);
+  }
+  card.appendChild(actions);
+
+  return card;
+}
+
+/**
+ * Fullscreen model detail: hero image, description, and a real trims grid
+ * (name, price, specs, real color swatches, Explore/Build links) modeled
+ * after hyundaiusa.com's own vehicle trim comparison layout.
+ */
+function renderFullscreen(root, item, bridge) {
+  const shell = document.createElement('div');
+  shell.className = 'gmd-fs';
+
+  const hero = document.createElement('div');
+  hero.className = 'gmd-fs-hero';
+  if (item.image_url) {
+    const img = document.createElement('img');
+    img.src = item.image_url;
+    img.alt = item.name || '';
+    img.onerror = () => img.remove();
+    hero.appendChild(img);
+  }
+  shell.appendChild(hero);
+
+  const content = document.createElement('div');
+  content.className = 'gmd-fs-content';
+
+  const head = document.createElement('div');
+  head.className = 'gmd-fs-head';
+  if (item.category) {
+    const chip = document.createElement('span');
+    chip.className = 'gmd-chip';
+    chip.textContent = item.category;
+    head.appendChild(chip);
+  }
+  const title = document.createElement('h1');
+  title.className = 'gmd-fs-title';
+  title.textContent = item.name || '';
+  head.appendChild(title);
+  if (item.description) {
+    const desc = document.createElement('p');
+    desc.className = 'gmd-fs-desc';
+    desc.textContent = item.description;
+    head.appendChild(desc);
+  }
+  content.appendChild(head);
+
+  const trims = Array.isArray(item.trims) ? item.trims : [];
+  if (trims.length) {
+    const trimsHeading = document.createElement('div');
+    trimsHeading.className = 'gmd-trims-heading';
+    trimsHeading.textContent = `${trims.length} ${item.name} trim${trims.length === 1 ? '' : 's'}`;
+    content.appendChild(trimsHeading);
+
+    const grid = document.createElement('div');
+    grid.className = 'gmd-trims-grid';
+    trims.forEach((trim) => grid.appendChild(buildTrimCard(trim, item.vehiclePageUrl, item.buildUrl)));
+    content.appendChild(grid);
+  }
+
+  if (bridge) {
+    const askBtn = document.createElement('button');
+    askBtn.type = 'button';
+    askBtn.className = 'gmd-ask-link';
+    askBtn.textContent = `Ask about the ${item.name}`;
+    askBtn.addEventListener('click', () => bridge.sendMessage(`Tell me more about the ${item.name}`));
+    content.appendChild(askBtn);
+  }
+
+  shell.appendChild(content);
+  root.appendChild(shell);
 }

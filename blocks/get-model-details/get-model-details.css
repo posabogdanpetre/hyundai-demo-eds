@@ -6,34 +6,43 @@ main > .section,
 main > .section:first-of-type {
   margin: 0;
 }
+
 main > .section > div {
   max-width: none;
   padding: 0;
 }
+
 body {
   overflow: auto;
 }
 
 main .get-model-details {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
   box-sizing: border-box;
+  max-width: 340px;
 }
+
+main .get-model-details:has(.is-fullscreen) {
+  max-width: none;
+  padding: 0;
+}
+
+/* ── Compact card ──────────────────────────────────────────────────────── */
 
 main .get-model-details .gmd-card {
   display: flex;
-  flex-direction: row;
-  min-height: 340px;
-  max-width: 640px;
+  flex-direction: column;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  background: #f7f8fa;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 15%);
   box-sizing: border-box;
 }
 
 main .get-model-details .gmd-image {
-  flex: 0 0 260px;
-  align-self: stretch;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   background: #002c5e;
 }
 
@@ -45,12 +54,10 @@ main .get-model-details .gmd-image img {
 }
 
 main .get-model-details .gmd-content {
-  flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 16px;
+  padding: 14px;
   box-sizing: border-box;
 }
 
@@ -58,10 +65,10 @@ main .get-model-details .gmd-chip {
   align-self: flex-start;
   padding: 3px 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
-  color: inherit;
+  background: #eef2fb;
+  color: #2486d3;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -71,38 +78,37 @@ main .get-model-details .gmd-title {
   font-size: 18px !important;
   font-weight: 700;
   line-height: 1.2 !important;
-  color: inherit;
+  color: #002c5e;
 }
 
 main .get-model-details .gmd-desc {
   margin: 0 !important;
   font-size: 13px !important;
   line-height: 1.45 !important;
-  color: inherit;
-  opacity: 0.78;
+  color: #6b6b6b;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 main .get-model-details .gmd-price {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
-  color: inherit;
+  color: #1b1b1b;
 }
 
 main .get-model-details .gmd-cta {
-  margin-top: auto;
+  margin-top: 4px;
   width: 100%;
   padding: 10px 12px;
   border: none;
   border-radius: 6px;
-  background: #1466a8;
+  background: #002c5e;
   color: #fff;
   font-family: inherit;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: opacity 0.15s;
 }
@@ -112,7 +118,7 @@ main .get-model-details .gmd-cta:hover {
 }
 
 main .get-model-details .gmd-cta:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid #002c5e;
   outline-offset: 2px;
 }
 
@@ -123,22 +129,234 @@ main .get-model-details .gmd-empty {
   color: var(--text-color, #333);
 }
 
-@media (max-width: 480px) {
-  main .get-model-details .gmd-card {
-    flex-direction: column;
-    min-height: 0;
-  }
-  main .get-model-details .gmd-image {
-    flex: 0 0 180px;
-    width: 100%;
-  }
-}
-
-/* Dark theme — dim outer widget background only; the palette-colored content
-   panel (lum <= 0.12) already reads correctly in both modes. */
 @media (prefers-color-scheme: dark) {
   main .get-model-details { background: #111; }
   main .get-model-details .gmd-empty { color: #eee; }
 }
 body.dark main .get-model-details { background: #111; }
 body.dark main .get-model-details .gmd-empty { color: #eee; }
+
+/* ── Fullscreen model + trims detail ──────────────────────────────────── */
+
+main .get-model-details .gmd-container.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  z-index: 2147483000;
+  background: #fff;
+  overflow: hidden;
+}
+
+main .get-model-details .gmd-container.is-fullscreen .gmd-body {
+  width: 100%;
+  height: 100%;
+}
+
+main .get-model-details .gmd-fs {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+main .get-model-details .gmd-fs-hero {
+  width: 100%;
+  height: 280px;
+  background: #002c5e;
+}
+
+main .get-model-details .gmd-fs-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+main .get-model-details .gmd-fs-content {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 32px 48px;
+  box-sizing: border-box;
+}
+
+main .get-model-details .gmd-fs-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+main .get-model-details .gmd-fs-title {
+  margin: 0 !important;
+  font-size: 30px !important;
+  line-height: 1.15 !important;
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+main .get-model-details .gmd-fs-desc {
+  margin: 0 !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  color: #6b6b6b;
+  max-width: 640px;
+}
+
+main .get-model-details .gmd-trims-heading {
+  margin: 32px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
+  font-size: 16px;
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+main .get-model-details .gmd-trims-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+main .get-model-details .gmd-trim-card {
+  flex: 1 1 260px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+main .get-model-details .gmd-trim-name {
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 700;
+  line-height: 1.2 !important;
+  color: #1b1b1b;
+}
+
+main .get-model-details .gmd-trim-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+main .get-model-details .gmd-trim-price strong {
+  font-size: 20px;
+  color: #1b1b1b;
+}
+
+main .get-model-details .gmd-trim-price span {
+  font-size: 12px;
+  color: #6b6b6b;
+}
+
+main .get-model-details .gmd-trim-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(0 0 0 / 8%);
+}
+
+main .get-model-details .gmd-trim-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / 15%);
+  box-sizing: border-box;
+}
+
+main .get-model-details .gmd-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+main .get-model-details .gmd-spec-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #444;
+}
+
+main .get-model-details .gmd-spec-icon {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  color: #8a8f98;
+}
+
+main .get-model-details .gmd-spec-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+main .get-model-details .gmd-trim-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+main .get-model-details .gmd-button {
+  flex: 1;
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+main .get-model-details .gmd-button:hover {
+  opacity: 0.88;
+}
+
+main .get-model-details .gmd-button-gray {
+  background: #8a8f98;
+  color: #fff;
+}
+
+main .get-model-details .gmd-button-navy {
+  background: #002c5e;
+  color: #fff;
+}
+
+main .get-model-details .gmd-ask-link {
+  display: block;
+  margin-top: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2486d3;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (width <= 720px) {
+  main .get-model-details .gmd-fs-hero {
+    height: 200px;
+  }
+
+  main .get-model-details .gmd-fs-content {
+    padding: 20px 16px 40px;
+  }
+
+  main .get-model-details .gmd-trim-card {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+}

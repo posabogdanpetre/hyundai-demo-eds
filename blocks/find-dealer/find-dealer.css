@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Required for correct iframe sizing — AEM section margins inflate shadow body */
+main > div,
+main > .section,
+main > .section:first-of-type {
+  margin: 0;
+}
+main > .section > div {
+  max-width: none;
+  padding: 0;
+}
+body {
+  overflow: auto;
+}
+
+main .find-dealer {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 12px;
+  background: transparent;
+}
+
+main .find-dealer .find-dealer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Search card */
+main .find-dealer .find-dealer-search {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  padding: 18px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+main .find-dealer .find-dealer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+main .find-dealer .find-dealer-heading svg {
+  opacity: 0.85;
+}
+
+main .find-dealer .find-dealer-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+main .find-dealer .find-dealer-input {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+main .find-dealer .find-dealer-input:focus {
+  outline: 2px solid #2486d3;
+  outline-offset: 1px;
+}
+
+main .find-dealer .find-dealer-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+main .find-dealer .find-dealer-btn:hover {
+  opacity: 0.88;
+}
+
+main .find-dealer .find-dealer-btn:focus-visible {
+  outline: 2px solid #2486d3;
+  outline-offset: 2px;
+}
+
+/* Results row */
+main .find-dealer .find-dealer-results {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+}
+
+main .find-dealer .find-dealer-card {
+  flex: 0 0 260px;
+  max-width: 260px;
+  border-radius: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+main .find-dealer .find-dealer-pin {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+main .find-dealer .find-dealer-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+main .find-dealer .find-dealer-address {
+  font-size: 12px;
+  opacity: 0.78;
+  line-height: 1.4;
+}
+
+main .find-dealer .find-dealer-phone {
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+main .find-dealer .find-dealer-phone:hover {
+  text-decoration: underline;
+}
+
+main .find-dealer .find-dealer-hours {
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+/* Dark mode — dim outer widget background only; keep palette card bg intact */
+@media (prefers-color-scheme: dark) {
+  main .find-dealer { background: transparent; }
+}
+body.dark main .find-dealer { background: transparent; }

@@ -39,55 +39,8 @@ const ICON_BOLT = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path
 const ICON_DRIVETRAIN = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M10 3v4M10 13v4M3 10h4M13 10h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
 const ICON_SEATS = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M5 17v-3a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
 
-// Sign-in triggers member pricing (10% off), applied server-side by the
-// get-model-details action -- never computed here. Prefers ChatGPT's native
-// connect sheet; falls back to calling the hidden `login` action, which is
-// enough on its own to make a requiresAuth host prompt for sign-in.
-async function triggerSignIn(bridge, modelName) {
-  if (bridge.chatgpt?.supportsConnectSheet) {
-    await bridge.chatgpt.requestConnectSheet();
-  } else {
-    const res = await bridge.callTool('login', {});
-    if (res?.isError) throw new Error('sign-in did not complete');
-  }
-  // Re-fetch rather than trust the sign-in result on its own -- the sheet can
-  // report success even when the user declined, so ask get-model-details
-  // again and read the loggedIn flag it computed.
-  const result = await bridge.callTool('get-model-details', modelName ? { model_name: modelName } : {});
-  return result?.structuredContent || {};
-}
-
-function renderSignInBar(bridge, modelName, onSignedIn) {
-  const bar = document.createElement('div');
-  bar.className = 'gmd-signin';
-
-  const label = document.createElement('span');
-  label.textContent = 'Sign in for 10% member pricing.';
-  bar.appendChild(label);
-
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.textContent = 'Sign in';
-  btn.addEventListener('click', async () => {
-    btn.disabled = true;
-    btn.textContent = 'Signing in...';
-    try {
-      const structuredContent = await triggerSignIn(bridge, modelName);
-      onSignedIn(structuredContent);
-    } catch (err) {
-      console.error('get-model-details sign-in failed', err);
-      btn.disabled = false;
-      btn.textContent = 'Sign in';
-    }
-  });
-  bar.appendChild(btn);
-
-  return bar;
-}
-
 export default async function decorate(block, bridge) {
   let item;
-  let modelName = '';
 
   if (bridge) {
     bridge.applyHostStyles();
@@ -97,15 +50,14 @@ export default async function decorate(block, bridge) {
     } else {
       const _result = await bridge.toolResult;
       item = _result?.structuredContent || {};
-      modelName = (await bridge.toolInput.catch(() => null))?.arguments?.model_name || item.name || '';
     }
     block.textContent = '';
-    renderView(block, item, bridge, modelName);
+    renderView(block, item, bridge);
     observeAndReportSize(block, bridge);
   } else {
     item = SAMPLE_DATA;
     block.textContent = '';
-    renderView(block, item, bridge, modelName);
+    renderView(block, item, bridge);
   }
 }
 
@@ -140,16 +92,14 @@ function fmtPrice(n) {
   return Number.isFinite(n) ? `$${n.toLocaleString('en-US')}` : null;
 }
 
-function renderView(block, initialItem, bridge, modelName) {
-  if (!initialItem?.name) {
+function renderView(block, item, bridge) {
+  if (!item?.name) {
     const empty = document.createElement('p');
     empty.className = 'gmd-empty';
     empty.textContent = 'No matching model was found.';
     block.appendChild(empty);
     return;
   }
-
-  let item = initialItem;
 
   const container = document.createElement('div');
   container.className = 'gmd-container';
@@ -159,15 +109,14 @@ function renderView(block, initialItem, bridge, modelName) {
 
   let displayMode = bridge?.hostContext?.displayMode || 'inline';
   const canFullscreen = !bridge || hostSupportsFullscreen(bridge);
-  const isPreview = bridge?.hostContext?.preview === true;
 
   const renderBody = () => {
     body.textContent = '';
     if (displayMode === 'fullscreen') {
-      renderFullscreen(body, item, bridge, modelName, isPreview, onSignedIn);
+      renderFullscreen(body, item, bridge);
     } else {
       const openFs = canFullscreen ? () => requestMode('fullscreen') : null;
-      renderCard(body, item, bridge, openFs, modelName, isPreview, onSignedIn);
+      renderCard(body, item, bridge, openFs);
     }
   };
 
@@ -212,11 +161,6 @@ function renderView(block, initialItem, bridge, modelName) {
     }
   };
 
-  const onSignedIn = (structuredContent) => {
-    item = { ...item, ...structuredContent };
-    renderBody();
-  };
-
   bridge?.onContextChange?.((ctx) => {
     const next = ctx?.displayMode || 'inline';
     if (next !== displayMode) {
@@ -240,7 +184,7 @@ function renderView(block, initialItem, bridge, modelName) {
  * the tool call that produces *this* card, so reusing it here for the next
  * tier (fullscreen) would make two different actions look identical.
  */
-function renderCard(block, item, bridge, onOpenFullscreen, modelName, isPreview, onSignedIn) {
+function renderCard(block, item, bridge, onOpenFullscreen) {
   const card = document.createElement('div');
   card.className = 'gmd-card';
 
@@ -304,23 +248,8 @@ function renderCard(block, item, bridge, onOpenFullscreen, modelName, isPreview,
   if (item.price) {
     const price = document.createElement('div');
     price.className = 'gmd-price';
-    if (item.loggedIn && item.memberPrice) {
-      const original = document.createElement('span');
-      original.className = 'gmd-price-original';
-      original.textContent = item.price;
-      const member = document.createElement('span');
-      member.className = 'gmd-price-member';
-      member.textContent = `${item.memberPrice} (member)`;
-      price.appendChild(original);
-      price.appendChild(member);
-    } else {
-      price.textContent = item.price;
-    }
+    price.textContent = item.price;
     content.appendChild(price);
-  }
-
-  if (bridge && !isPreview && !item.loggedIn) {
-    content.appendChild(renderSignInBar(bridge, modelName, onSignedIn));
   }
 
   if (trims.length) {
@@ -398,10 +327,7 @@ function buildTrimCard(trim, vehiclePageUrl, buildUrl) {
   const priceEl = document.createElement('div');
   priceEl.className = 'gmd-trim-price';
   const priceText = fmtPrice(trim.price);
-  const memberPriceText = fmtPrice(trim.memberPrice);
-  if (memberPriceText) {
-    priceEl.innerHTML = `<s>${priceText}</s><strong>${memberPriceText}</strong><span>member price</span>`;
-  } else if (priceText) {
+  if (priceText) {
     priceEl.innerHTML = `<strong>${priceText}</strong><span>Starting MSRP</span>`;
   }
   card.appendChild(priceEl);
@@ -459,7 +385,7 @@ function buildTrimCard(trim, vehiclePageUrl, buildUrl) {
  * (name, price, specs, real color swatches, Explore/Build links) modeled
  * after hyundaiusa.com's own vehicle trim comparison layout.
  */
-function renderFullscreen(root, item, bridge, modelName, isPreview, onSignedIn) {
+function renderFullscreen(root, item, bridge) {
   const shell = document.createElement('div');
   shell.className = 'gmd-fs';
 
@@ -496,10 +422,6 @@ function renderFullscreen(root, item, bridge, modelName, isPreview, onSignedIn) 
     head.appendChild(desc);
   }
   content.appendChild(head);
-
-  if (bridge && !isPreview && !item.loggedIn) {
-    content.appendChild(renderSignInBar(bridge, modelName, onSignedIn));
-  }
 
   const trims = Array.isArray(item.trims) ? item.trims : [];
   if (trims.length) {

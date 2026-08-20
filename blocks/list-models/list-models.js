@@ -37,8 +37,28 @@ function getThemedCardBg(palette) {
 }
 const theme = getThemedCardBg(PALETTE);
 
+// Sign-in triggers member pricing (10% off), applied server-side by the
+// list-models action -- never computed here. Prefers ChatGPT's native
+// connect sheet; falls back to calling the hidden `login` action, which is
+// enough on its own to make a requiresAuth host prompt for sign-in.
+async function triggerSignIn(bridge, category) {
+  if (bridge.chatgpt?.supportsConnectSheet) {
+    await bridge.chatgpt.requestConnectSheet();
+  } else {
+    const res = await bridge.callTool('login', {});
+    if (res?.isError) throw new Error('sign-in did not complete');
+  }
+  // Re-fetch rather than trust the sign-in result on its own -- the sheet can
+  // report success even when the user declined, so ask list-models again and
+  // read the loggedIn flag it computed.
+  const result = await bridge.callTool('list-models', category ? { category } : {});
+  return result?.structuredContent || {};
+}
+
 export default async function decorate(block, bridge) {
   let items;
+  let loggedIn = false;
+  let category = '';
 
   if (bridge) {
     bridge.applyHostStyles();
@@ -50,13 +70,18 @@ export default async function decorate(block, bridge) {
       const structuredContent = _result?.structuredContent || {};
       // structuredContent.models — bare array outputSchema; key derived from actionName "list_models"
       items = structuredContent?.models || [];
+      loggedIn = structuredContent?.loggedIn === true;
+      category = (await bridge.toolInput.catch(() => null))?.arguments?.category || '';
     }
   } else {
     items = SAMPLE_DATA;
   }
 
-  block.textContent = '';
-  renderItems(block, items, bridge);
+  const render = (nextItems, nextLoggedIn) => {
+    block.textContent = '';
+    renderItems(block, nextItems, bridge, nextLoggedIn, category, render);
+  };
+  render(items, loggedIn);
 
   if (bridge) {
     bridge.reportSize(block.offsetWidth, block.offsetHeight);
@@ -69,7 +94,35 @@ export default async function decorate(block, bridge) {
   }
 }
 
-function renderItems(block, items, bridge) {
+function renderSignInBar(bridge, category, onSignedIn) {
+  const bar = document.createElement('div');
+  bar.className = 'list-models-signin';
+
+  const label = document.createElement('span');
+  label.textContent = 'Sign in for 10% member pricing.';
+  bar.appendChild(label);
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.textContent = 'Sign in';
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+    try {
+      const structuredContent = await triggerSignIn(bridge, category);
+      onSignedIn(structuredContent.models || [], structuredContent.loggedIn === true);
+    } catch (err) {
+      console.error('list-models sign-in failed', err);
+      btn.disabled = false;
+      btn.textContent = 'Sign in';
+    }
+  });
+  bar.appendChild(btn);
+
+  return bar;
+}
+
+function renderItems(block, items, bridge, loggedIn, category, render) {
   const list = (items || []).slice(0, 10);
 
   const wrapper = document.createElement('div');
@@ -126,7 +179,19 @@ function renderItems(block, items, bridge) {
 
     const price = document.createElement('span');
     price.className = 'list-models-price';
-    price.textContent = item.price || 'MSRP available at dealer';
+    if (loggedIn && item.memberPrice) {
+      price.innerHTML = '';
+      const original = document.createElement('span');
+      original.className = 'list-models-price-original';
+      original.textContent = item.price;
+      const member = document.createElement('span');
+      member.className = 'list-models-price-member';
+      member.textContent = `${item.memberPrice} (member)`;
+      price.appendChild(original);
+      price.appendChild(member);
+    } else {
+      price.textContent = item.price || 'MSRP available at dealer';
+    }
     info.appendChild(price);
 
     const btn = document.createElement('button');
@@ -183,4 +248,9 @@ function renderItems(block, items, bridge) {
   requestAnimationFrame(updateArrows);
 
   block.appendChild(wrapper);
+
+  const isPreview = bridge?.hostContext?.preview === true;
+  if (bridge && !isPreview && !loggedIn) {
+    block.appendChild(renderSignInBar(bridge, category, render));
+  }
 }

@@ -227,11 +227,50 @@ function renderCard(block, item, bridge, onOpenFullscreen) {
     content.appendChild(desc);
   }
 
+  // A quick-glance taste of the richer fullscreen data (base-trim specs,
+  // trim count, color swatches) — this is what should make the card read as
+  // "more than the list-models teaser," not identical to it.
+  const trims = Array.isArray(item.trims) ? item.trims : [];
+  const baseTrim = trims[0];
+  if (baseTrim) {
+    const specs = document.createElement('div');
+    specs.className = 'gmd-card-specs';
+    if (baseTrim.mpgText) specs.appendChild(specRow(ICON_FUEL, baseTrim.mpgText));
+    if (Number.isFinite(baseTrim.horsePower)) specs.appendChild(specRow(ICON_BOLT, `${baseTrim.horsePower} hp`));
+    if (baseTrim.driveTrain) specs.appendChild(specRow(ICON_DRIVETRAIN, baseTrim.driveTrain));
+    if (Number.isFinite(baseTrim.seats)) specs.appendChild(specRow(ICON_SEATS, `${baseTrim.seats} seats`));
+    content.appendChild(specs);
+  }
+
   if (item.price) {
     const price = document.createElement('div');
     price.className = 'gmd-price';
     price.textContent = item.price;
     content.appendChild(price);
+  }
+
+  if (trims.length) {
+    const meta = document.createElement('div');
+    meta.className = 'gmd-card-trims-meta';
+
+    const count = document.createElement('span');
+    count.className = 'gmd-card-trims-count';
+    count.textContent = `${trims.length} trim${trims.length === 1 ? '' : 's'} available`;
+    meta.appendChild(count);
+
+    const allColors = [...new Set(trims.flatMap((t) => t.colors || []))].slice(0, 6);
+    if (allColors.length) {
+      const swatches = document.createElement('div');
+      swatches.className = 'gmd-card-colors';
+      allColors.forEach((hex) => {
+        const dot = document.createElement('span');
+        dot.className = 'gmd-card-color';
+        dot.style.background = hex;
+        swatches.appendChild(dot);
+      });
+      meta.appendChild(swatches);
+    }
+    content.appendChild(meta);
   }
 
   const btn = document.createElement('button');

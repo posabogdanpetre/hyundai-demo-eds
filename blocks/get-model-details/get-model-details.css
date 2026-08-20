@@ -106,10 +106,41 @@ main .get-model-details .gmd-desc {
   overflow: hidden;
 }
 
+main .get-model-details .gmd-card-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
 main .get-model-details .gmd-price {
   font-size: 15px;
   font-weight: 700;
   color: #1b1b1b;
+}
+
+main .get-model-details .gmd-card-trims-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+main .get-model-details .gmd-card-trims-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2486d3;
+}
+
+main .get-model-details .gmd-card-colors {
+  display: flex;
+  gap: 4px;
+}
+
+main .get-model-details .gmd-card-color {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / 15%);
+  box-sizing: border-box;
 }
 
 main .get-model-details .gmd-cta {
@@ -306,6 +337,16 @@ main .get-model-details .gmd-spec-icon {
   width: 18px;
   height: 18px;
   color: #8a8f98;
+}
+
+main .get-model-details .gmd-card-specs .gmd-spec-row {
+  font-size: 12px;
+}
+
+main .get-model-details .gmd-card-specs .gmd-spec-icon {
+  flex: 0 0 15px;
+  width: 15px;
+  height: 15px;
 }
 
 main .get-model-details .gmd-spec-icon svg {

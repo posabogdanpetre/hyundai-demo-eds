@@ -162,10 +162,21 @@ main .find-dealers .find-dealers-card-header {
   height: 56px;
   flex: 0 0 auto;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
   box-sizing: border-box;
+}
+
+main .find-dealers .find-dealers-card-logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+main .find-dealers .find-dealers-card-logo svg {
+  display: block;
+  height: 16px;
+  width: auto;
 }
 
 main .find-dealers .find-dealers-distance-badge {
@@ -782,10 +793,15 @@ main .find-dealers .fd-fs-hero {
 }
 
 main .find-dealers .fd-fs-hero-label {
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  color: rgb(255 255 255 / 85%);
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.9;
+}
+
+main .find-dealers .fd-fs-hero-label svg {
+  display: block;
+  height: 32px;
+  width: auto;
 }
 
 main .find-dealers .fd-fs-detail-body {

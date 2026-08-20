@@ -538,10 +538,18 @@ main .find-dealers .find-dealers-map-card:focus-visible {
 }
 
 main .find-dealers .find-dealers-map-card-thumb {
-  flex: 0 0 48px;
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main .find-dealers .find-dealers-map-card-thumb svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 main .find-dealers .find-dealers-map-card-body {
@@ -623,8 +631,8 @@ main .find-dealers .find-dealers-container.is-fullscreen {
   z-index: 2147483000;
   display: flex;
   flex-direction: column;
-  background: #1a1a1a;
-  color: #f4f4f4;
+  background: #fff;
+  color: #1b1b1b;
   overflow: hidden;
 }
 
@@ -644,6 +652,7 @@ main .find-dealers .fd-fs {
   width: 100%;
   box-sizing: border-box;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #fff;
 }
 
 main .find-dealers .fd-fs-cols {
@@ -656,24 +665,26 @@ main .find-dealers .fd-fs-rail {
   flex: 0 0 340px;
   overflow-y: auto;
   padding: 16px;
-  border-right: 1px solid rgb(255 255 255 / 8%);
+  background: #f7f8fa;
+  border-right: 1px solid rgb(0 0 0 / 8%);
 }
 
 main .find-dealers .fd-fs-rail-title {
   font-size: 15px;
   font-weight: 700;
-  color: #fff;
+  color: #002c5e;
 }
 
 main .find-dealers .fd-fs-rail-sub {
   margin-top: 2px;
   margin-bottom: 12px;
   font-size: 12px;
-  color: #9aa0a6;
+  color: #6b6b6b;
 }
 
 main .find-dealers .fd-fs-rail-card {
   display: flex;
+  align-items: center;
   gap: 12px;
   width: 100%;
   padding: 8px;
@@ -687,11 +698,11 @@ main .find-dealers .fd-fs-rail-card {
 }
 
 main .find-dealers .fd-fs-rail-card:hover {
-  background: rgb(255 255 255 / 5%);
+  background: rgb(0 0 0 / 4%);
 }
 
 main .find-dealers .fd-fs-rail-card.is-active {
-  background: rgb(36 134 211 / 16%);
+  background: rgb(36 134 211 / 10%);
   border-color: #2486d3;
 }
 
@@ -701,10 +712,18 @@ main .find-dealers .fd-fs-rail-card:focus-visible {
 }
 
 main .find-dealers .fd-fs-rail-thumb {
-  flex: 0 0 48px;
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main .find-dealers .fd-fs-rail-thumb svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 main .find-dealers .fd-fs-rail-meta {
@@ -718,7 +737,7 @@ main .find-dealers .fd-fs-rail-meta {
 main .find-dealers .fd-fs-rail-name {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: #002c5e;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -726,7 +745,7 @@ main .find-dealers .fd-fs-rail-name {
 
 main .find-dealers .fd-fs-rail-cat {
   font-size: 12px;
-  color: #9aa0a6;
+  color: #6b6b6b;
 }
 
 main .find-dealers .fd-fs-detail {
@@ -734,6 +753,7 @@ main .find-dealers .fd-fs-detail {
   min-width: 0;
   overflow-y: auto;
   padding: 24px 32px 40px;
+  background: #fff;
 }
 
 main .find-dealers .fd-fs-detail-head {
@@ -741,178 +761,257 @@ main .find-dealers .fd-fs-detail-head {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 main .find-dealers .fd-fs-detail-headleft {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   min-width: 0;
 }
 
-main .find-dealers .fd-fs-stars {
-  color: #f5b400;
-  font-size: 13px;
-  letter-spacing: 1px;
+main .find-dealers .fd-fs-detail-pin {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 35px;
+  margin-top: 2px;
+}
+
+main .find-dealers .fd-fs-detail-pin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 main .find-dealers .fd-fs-detail-title {
-  margin: 2px 0 0 !important;
-  font-size: 30px !important;
-  line-height: 1.1 !important;
+  margin: 0 !important;
+  font-size: 26px !important;
+  line-height: 1.15 !important;
   font-weight: 700;
-  color: #fff;
+  color: #1b1b1b;
 }
 
 main .find-dealers .fd-fs-detail-loc {
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 14px;
-  color: #9aa0a6;
+  color: #6b6b6b;
 }
 
-main .find-dealers .fd-fs-rating-badge {
+main .find-dealers .fd-fs-star {
   flex: 0 0 auto;
-  min-width: 40px;
-  height: 40px;
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px 8px 8px 2px;
-  background: #2486d3;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #002c5e;
+  cursor: pointer;
 }
 
-main .find-dealers .fd-fs-hero {
-  width: 100%;
-  height: 220px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-main .find-dealers .fd-fs-hero-label {
-  display: inline-flex;
-  align-items: center;
-  opacity: 0.9;
-}
-
-main .find-dealers .fd-fs-hero-label svg {
+main .find-dealers .fd-fs-star svg {
   display: block;
-  height: 32px;
-  width: auto;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1;
 }
 
-main .find-dealers .fd-fs-detail-body {
+main .find-dealers .fd-fs-tabs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  margin-top: 24px;
-  align-items: flex-start;
-}
-
-main .find-dealers .fd-fs-main {
-  flex: 1 1 340px;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
   gap: 24px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
 }
 
-main .find-dealers .fd-fs-infogrid {
+main .find-dealers .fd-fs-tab {
+  padding: 0 0 10px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #6b6b6b;
+  cursor: pointer;
+}
+
+main .find-dealers .fd-fs-tab.is-active {
+  color: #002c5e;
+  border-bottom-color: #2486d3;
+}
+
+main .find-dealers .fd-fs-info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+main .find-dealers .fd-fs-address p {
+  margin: 0 !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  color: #6b6b6b;
+}
+
+main .find-dealers .fd-fs-info-actions {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 8px;
-}
-
-main .find-dealers .fd-fs-inforow {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 14px;
-  max-width: 340px;
-}
-
-main .find-dealers .fd-fs-inforow span {
-  color: #9aa0a6;
-}
-
-main .find-dealers .fd-fs-inforow strong {
-  color: #f4f4f4;
+  flex: 0 0 auto;
   text-align: right;
 }
 
-main .find-dealers .fd-fs-highlights h2 {
-  margin: 0 0 10px !important;
-  font-size: 18px !important;
+main .find-dealers .fd-fs-directions-link,
+main .find-dealers .fd-fs-phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
   font-weight: 700;
-  color: #fff;
+  color: #002c5e;
+  text-decoration: none;
 }
 
-main .find-dealers .fd-fs-highlights-grid {
+main .find-dealers .fd-fs-directions-link svg,
+main .find-dealers .fd-fs-phone-link svg {
+  width: 12px;
+  height: 12px;
+  fill: currentcolor;
+}
+
+main .find-dealers .fd-fs-hours-heading {
+  margin: 0 0 12px !important;
+  font-size: 17px !important;
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+main .find-dealers .fd-fs-hours-table {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
+  max-width: 420px;
+  margin-bottom: 24px;
 }
 
-main .find-dealers .fd-fs-highlight {
-  font-size: 13px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  background: rgb(255 255 255 / 6%);
-  color: #dfe3e8;
+main .find-dealers .fd-fs-hours-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 15px;
 }
 
-main .find-dealers .fd-fs-panel {
-  flex: 1 1 280px;
-  max-width: 340px;
-  padding: 20px;
-  border: 1px solid rgb(255 255 255 / 10%);
-  border-radius: 12px;
-  background: rgb(255 255 255 / 3%);
-  box-sizing: border-box;
+main .find-dealers .fd-fs-hours-day {
+  color: #6b6b6b;
 }
 
-main .find-dealers .fd-fs-panel h3 {
-  margin: 0 0 10px !important;
-  font-size: 16px !important;
-  font-weight: 700;
-  color: #fff;
+main .find-dealers .fd-fs-hours-time {
+  color: #1b1b1b;
+  text-align: right;
 }
 
-main .find-dealers .fd-fs-panel-note {
-  margin: 0 0 16px !important;
-  font-size: 13px !important;
-  color: #9aa0a6;
+main .find-dealers .fd-fs-button-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-main .find-dealers .fd-fs-panel-cta {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #2486d3;
-  color: #fff;
+main .find-dealers .fd-fs-button {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 4px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
   transition: opacity 0.15s;
+  max-width: 260px;
 }
 
-main .find-dealers .fd-fs-panel-cta:hover {
-  opacity: 0.9;
+main .find-dealers .fd-fs-button svg {
+  width: 14px;
+  height: 14px;
+  fill: currentcolor;
 }
 
-main .find-dealers .fd-fs-panel-directions {
+main .find-dealers .fd-fs-button:hover {
+  opacity: 0.88;
+}
+
+main .find-dealers .fd-fs-button-gray {
+  background: #8a8f98;
+  color: #fff;
+}
+
+main .find-dealers .fd-fs-button-navy {
+  background: #002c5e;
+  color: #fff;
+}
+
+main .find-dealers .fd-fs-site-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #002c5e;
+  text-decoration: none;
+}
+
+main .find-dealers .fd-fs-site-link svg {
+  width: 12px;
+  height: 12px;
+  fill: currentcolor;
+}
+
+main .find-dealers .fd-fs-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(0 0 0 / 10%);
+}
+
+main .find-dealers .fd-fs-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+main .find-dealers .fd-fs-badge-icon {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+}
+
+main .find-dealers .fd-fs-badge-icon svg {
   display: block;
-  margin-top: 12px;
-  text-align: center;
-  font-size: 12px;
-  color: #9aa0a6;
-  text-decoration: underline;
+  width: 100%;
+  height: 100%;
+}
+
+main .find-dealers .fd-fs-badge-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2486d3;
+  line-height: 1.2;
+  max-width: 90px;
+}
+
+main .find-dealers .fd-fs-star.is-active svg {
+  fill: currentcolor;
+  stroke: none;
 }
 
 @media (width <= 720px) {
@@ -924,19 +1023,24 @@ main .find-dealers .fd-fs-panel-directions {
     flex: 0 0 auto;
     max-height: 40%;
     border-right: none;
-    border-bottom: 1px solid rgb(255 255 255 / 8%);
+    border-bottom: 1px solid rgb(0 0 0 / 8%);
   }
 
-  main .find-dealers .fd-fs-detail-body {
+  main .find-dealers .fd-fs-info-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  main .find-dealers .fd-fs-info-actions {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  main .find-dealers .fd-fs-button-row {
     flex-direction: column;
   }
 
-  main .find-dealers .fd-fs-panel {
-    flex: 0 0 auto;
-    width: 100%;
-  }
-
-  main .find-dealers .fd-fs-hero {
-    height: 160px;
+  main .find-dealers .fd-fs-button {
+    max-width: none;
   }
 }

@@ -189,20 +189,25 @@ main .find-dealers .find-dealers-distance-badge {
 }
 
 main .find-dealers .find-dealers-info {
-  padding: 10px 14px;
+  padding: 12px 14px 14px;
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  background: #fff;
+  color: #1b1b1b;
+}
+
+main .find-dealers .find-dealers-name-zone {
+  padding-bottom: 10px;
 }
 
 main .find-dealers .find-dealers-name {
   margin: 0 !important;
-  font-size: 14px !important;
-  line-height: 1.2 !important;
+  font-size: 15px !important;
+  line-height: 1.25 !important;
   font-weight: 700;
-  color: inherit;
+  color: #002c5e;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -216,41 +221,43 @@ main .find-dealers .find-dealers-stars {
 }
 
 main .find-dealers .find-dealers-address {
-  margin: 0 !important;
-  font-size: 11px !important;
-  line-height: 1.35 !important;
-  color: inherit;
-  opacity: 0.78;
+  margin: 4px 0 0 !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+  color: #6b6b6b;
 }
 
 main .find-dealers .find-dealers-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
+  padding: 10px 0;
+  border-top: 1px solid rgb(0 0 0 / 8%);
 }
 
 main .find-dealers .find-dealers-chip {
   font-size: 10px;
-  font-weight: 600;
-  padding: 2px 8px;
+  font-weight: 700;
+  padding: 3px 9px;
   border-radius: 10px;
-  background: rgb(255 255 255 / 14%);
-  color: inherit;
+  background: #eef2fb;
+  color: #2486d3;
 }
 
 main .find-dealers .find-dealers-actions {
   margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgb(0 0 0 / 8%);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 main .find-dealers .find-dealers-directions {
   text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  color: inherit;
-  opacity: 0.85;
+  font-size: 12px;
+  font-weight: 700;
+  color: #002c5e;
   text-decoration: underline;
 }
 

@@ -120,31 +120,6 @@ const SAMPLE_DATA = [
   },
 ];
 
-// Brand palette from the action payload — used to derive card info-strip background.
-const PALETTE = ['#002c5e', '#2486d3', '#3860be'];
-
-function getThemedCardBg(palette) {
-  if (!palette || !palette[0]) return null;
-  let hex = palette[0].replace('#', '');
-  if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-  if (hex.length !== 6) return null;
-  const [r, g, b] = [parseInt(hex.slice(0, 2), 16), parseInt(hex.slice(2, 4), 16), parseInt(hex.slice(4, 6), 16)];
-  if (isNaN(r) || isNaN(g) || isNaN(b)) return null;
-  const lum = (c) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
-  const relLum = (rr, gg, bb) => 0.2126 * lum(rr) + 0.7152 * lum(gg) + 0.0722 * lum(bb);
-  if (relLum(r, g, b) <= 0.12) return { bg: `#${hex}`, fg: '#ffffff' };
-  let lo = 0; let
-    hi = 1;
-  for (let i = 0; i < 20; i += 1) {
-    const m = (lo + hi) / 2;
-    if (relLum(Math.round(r * m), Math.round(g * m), Math.round(b * m)) > 0.12) hi = m; else lo = m;
-  }
-  const dr = Math.round(r * lo); const dg = Math.round(g * lo); const
-    db = Math.round(b * lo);
-  return { bg: `#${dr.toString(16).padStart(2, '0')}${dg.toString(16).padStart(2, '0')}${db.toString(16).padStart(2, '0')}`, fg: '#ffffff' };
-}
-const theme = getThemedCardBg(PALETTE);
-
 // A single consistent brand color for every "no photo" placeholder surface
 // (card header, hero, thumbnails) — dealers don't have photos in this data
 // source, so these are branded fills, not a decorative rainbow per card.
@@ -444,25 +419,28 @@ function renderCarousel(block, items, bridge, onOpenFullscreen) {
 
     const info = document.createElement('div');
     info.className = 'find-dealers-info';
-    info.style.cssText = `background:${theme?.bg ?? '#1a1a1a'};color:${theme?.fg ?? '#fff'}`;
+
+    const nameZone = document.createElement('div');
+    nameZone.className = 'find-dealers-name-zone';
 
     const title = document.createElement('h3');
     title.className = 'find-dealers-name';
     title.textContent = item.name || '';
-    info.appendChild(title);
+    nameZone.appendChild(title);
 
     if (item.rating) {
       const stars = document.createElement('span');
       stars.className = 'find-dealers-stars';
       stars.textContent = starString(item.rating);
       stars.setAttribute('aria-label', `${item.rating} out of 5 stars`);
-      info.appendChild(stars);
+      nameZone.appendChild(stars);
     }
 
     const addr = document.createElement('p');
     addr.className = 'find-dealers-address';
     addr.textContent = `${item.address || ''}, ${item.city || ''}, ${item.state || ''}`;
-    info.appendChild(addr);
+    nameZone.appendChild(addr);
+    info.appendChild(nameZone);
 
     if (Array.isArray(item.services) && item.services.length) {
       const chips = document.createElement('div');
